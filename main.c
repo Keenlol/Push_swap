@@ -4,53 +4,69 @@
 
 typedef struct	s_stack
 {
-	size_t	i_top;
-	size_t	i_max;
+	ssize_t	i_top;
+	ssize_t	i_max;
 	int		*arr;		
 }				t_stack;
 
 
 
-void    print_stacks(int *a, int *b)
+void    print_stacks(t_stack *stack_a, t_stack *stack_b)
 {
-	size_t  i;
-	
-	i = 0;
-	printf("-----------------\n");
-	while(a[i])
+	ssize_t	i;
+
+	i = stack_a->i_top;
+	if (stack_b->i_top > i)
+		i = stack_b->i_top;
+	printf("---------------------\n");
+	while (i >= 0)
 	{
-		printf("%d %d\n", a[i], b[i]);
-		i++;
+		if (stack_a->i_top >= i)
+			printf("%d ", stack_a->arr[i]);
+		else
+			printf("  ");
+		if (stack_b->i_top >= i)
+			printf("%d\n", stack_b->arr[i]);
+		else
+			printf(" \n");
+		i--;
 	}
-	printf("_ _\na b\n-----------------\n");
+	printf("_ _\na b\n");
 }
 
-t_stack*	create_stack(size_t size, int *arr)
+void	create_stack_a(t_stack *stack_a, char *argv[], ssize_t size)
 {
-	t_stack	new_stack;
-	size_t	i;
+	int		*arr;
+	int		i;
 
-	new_stack.i_max = size;
-	if (*arr == NULL)
-		new_stack.i_top = size;
-	else
-		new_stack.i_top = -1;
+	stack_a->i_max = size - 1;
+	stack_a->i_top = size - 1;
+	arr = malloc(size * sizeof(int));
+	i = 1;
+	while (argv[i])
+	{
+		arr[i-1] = atoi(argv[i]);
+		i++;
+	}
+	stack_a->arr = arr;
+}
+
+void	create_stack_b(t_stack *stack_b, ssize_t size)
+{
+	int		*arr;
+
+	stack_b->i_max = size - 1;
+	stack_b->i_top = - 1;
+	arr = malloc(size * sizeof(int));
+	stack_b->arr = arr;
 }
 
 int main(int argc, char *argv[])
 {
-	int *a;
-	int *b;
-	
-	b = (int *)malloc((argc - 1) * sizeof(t_stack));
-	if (!b)
-		return (0);
-	a = (int *)malloc((argc - 1) * sizeof(t_stack));
-	if (!a)
-		return (0);
+	t_stack	stack_a;
+	t_stack	stack_b;
 
-	read_into(argv, a);
-
-	print_stacks(a, b);
-	
+	create_stack_a(&stack_a, argv, argc - 1);
+	create_stack_b(&stack_b, argc - 1);
+	print_stacks(&stack_a, &stack_b);
 }
