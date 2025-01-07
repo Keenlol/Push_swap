@@ -97,13 +97,13 @@ void	p(t_stack *stack_a, t_stack *stack_b, char mode)
 	printf("p%c\n", mode);
 	if (mode == 'a')
 	{
-		stack_from = stack_a;
-		stack_to = stack_b;
+		stack_from = stack_b;
+		stack_to = stack_a;
 	}
 	else if (mode == 'b')
 	{
-		stack_from = stack_b;
-		stack_to = stack_a;
+		stack_from = stack_a;
+		stack_to = stack_b;
 	}
 	if (stack_from->i_top < 0)
 		return ;
