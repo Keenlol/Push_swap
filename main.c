@@ -89,10 +89,36 @@ void	s(t_stack *stack_a, t_stack *stack_b, char mode)
 	}
 }
 
+void	p(t_stack *stack_a, t_stack *stack_b, char mode)
+{
+	t_stack	*stack_from;
+	t_stack	*stack_to;
+
+	if (mode == 'a')
+	{
+		stack_from = stack_a;
+		stack_to = stack_b;
+	}
+	else if (mode == 'b')
+	{
+		stack_from = stack_b;
+		stack_to = stack_a;
+	}
+	printf("p%c\n", mode);
+	if (stack_from->i_top < 0)
+		return;
+	stack_to->i_top++;
+	stack_to->arr[stack_to->i_top] = stack_from->arr[stack_from->i_top];
+	stack_from->arr[stack_from->i_top] = 0;
+	stack_from->i_top--;
+}
+
 void	use(char *command, t_stack *stack_a, t_stack *stack_b)
 {
 	if (command[0] == 's')
 		s(stack_a, stack_b, command[1]);
+	else if (command[0] == 'p')
+		p(stack_a, stack_b, command[1]);
 }
 
 int main(int argc, char *argv[])
@@ -104,7 +130,8 @@ int main(int argc, char *argv[])
 	create_stack_b(&stack_b, argc - 1);
 	print_stacks(&stack_a, &stack_b);
 
-	use("sa", &stack_a, &stack_b);
+	use("pa", &stack_a, &stack_b);
+	use("pa", &stack_a, &stack_b);
 	// use("sb", &stack_a, &stack_b);
 
 	print_stacks(&stack_a, &stack_b);
