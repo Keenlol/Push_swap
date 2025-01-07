@@ -11,8 +11,6 @@ typedef struct	s_stack
 	int		*arr;		
 }				t_stack;
 
-
-
 void    print_stacks(t_stack *stack_a, t_stack *stack_b)
 {
 	ssize_t	i;
@@ -193,14 +191,31 @@ int main(int argc, char *argv[])
 
 	print_stacks(&stack_a, &stack_b);
 
-	use("pb", &stack_a, &stack_b);
-	use("pb", &stack_a, &stack_b);
-	use("pb", &stack_a, &stack_b);
+	use("sa", &stack_a, &stack_b);
+
 	print_stacks(&stack_a, &stack_b);
-	use("rra", &stack_a, &stack_b);
-	use("rrb", &stack_a, &stack_b);
+	
+	use("pb", &stack_a, &stack_b);
+	use("pb", &stack_a, &stack_b);
+	use("pb", &stack_a, &stack_b);
+
+	print_stacks(&stack_a, &stack_b);
+
+	use("rr", &stack_a, &stack_b);
+
+	print_stacks(&stack_a, &stack_b);
+
 	use("rrr", &stack_a, &stack_b);
 
 	print_stacks(&stack_a, &stack_b);
 
+	use("sa", &stack_a, &stack_b);
+
+	print_stacks(&stack_a, &stack_b);
+
+	use("pa", &stack_a, &stack_b);
+	use("pa", &stack_a, &stack_b);
+	use("pa", &stack_a, &stack_b);
+
+	print_stacks(&stack_a, &stack_b);
 }
