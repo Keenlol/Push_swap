@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -141,14 +143,44 @@ void	r(t_stack *stack_a, t_stack *stack_b, char mode)
 	}
 }
 
+void	rr_operation(t_stack *stack)
+{
+	int		tmp;
+	int		i;
+
+	tmp = stack->arr[0];
+	i = 0;
+	while (i < stack->i_top)
+		stack->arr[i++] = stack->arr[i + 1];
+	stack->arr[stack->i_top] = tmp;
+}
+
+void	rr(t_stack *stack_a, t_stack *stack_b, char mode)
+{
+	t_stack	*stack_main;
+
+	printf("rr%c\n", mode);
+	if (mode == 'a')
+		rr_operation(stack_a);
+	else if (mode == 'b')
+		rr_operation(stack_b);
+	else if (mode == 'r')
+	{
+		rr_operation(stack_a);
+		rr_operation(stack_b);
+	}
+}
+
 void	use(char *command, t_stack *stack_a, t_stack *stack_b)
 {
 	if (command[0] == 's')
 		s(stack_a, stack_b, command[1]);
 	else if (command[0] == 'p')
 		p(stack_a, stack_b, command[1]);
-	else if (command[0] == 'r')
+	else if (command[0] == 'r' && strlen(command) == 2)
 		r(stack_a, stack_b, command[1]);
+	else if (command[0] == 'r' && command[1] == 'r' && strlen(command) == 3)
+		rr(stack_a, stack_b, command[2]);
 }
 
 int main(int argc, char *argv[])
@@ -158,19 +190,16 @@ int main(int argc, char *argv[])
 
 	create_stack_a(&stack_a, argv, argc - 1);
 	create_stack_b(&stack_b, argc - 1);
-	print_stacks(&stack_a, &stack_b);
-
-	use("ra", &stack_a, &stack_b);
 
 	print_stacks(&stack_a, &stack_b);
 
 	use("pb", &stack_a, &stack_b);
 	use("pb", &stack_a, &stack_b);
 	use("pb", &stack_a, &stack_b);
-	// use("ra", &stack_a, &stack_b);
-	// use("rb", &stack_a, &stack_b);
-	// use("rr", &stack_a, &stack_b);
-	// use("sb", &stack_a, &stack_b);
+	print_stacks(&stack_a, &stack_b);
+	use("rra", &stack_a, &stack_b);
+	use("rrb", &stack_a, &stack_b);
+	use("rrr", &stack_a, &stack_b);
 
 	print_stacks(&stack_a, &stack_b);
 
