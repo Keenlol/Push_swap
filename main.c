@@ -67,6 +67,7 @@ void	s(t_stack *stack_a, t_stack *stack_b, char mode)
 	t_stack	*stack_main;
 	int		i;
 
+	printf("s%c\n", mode);
 	i = 1;
 	if (mode == 'a')
 		stack_main = stack_a;
@@ -77,7 +78,6 @@ void	s(t_stack *stack_a, t_stack *stack_b, char mode)
 		stack_main = stack_a;
 		i = 2;
 	}
-	printf("s%c\n", mode);
 	while (i-- >= 1)
 	{	
 		if (stack_main->i_top < 1)
@@ -94,6 +94,7 @@ void	p(t_stack *stack_a, t_stack *stack_b, char mode)
 	t_stack	*stack_from;
 	t_stack	*stack_to;
 
+	printf("p%c\n", mode);
 	if (mode == 'a')
 	{
 		stack_from = stack_a;
@@ -104,7 +105,6 @@ void	p(t_stack *stack_a, t_stack *stack_b, char mode)
 		stack_from = stack_b;
 		stack_to = stack_a;
 	}
-	printf("p%c\n", mode);
 	if (stack_from->i_top < 0)
 		return ;
 	stack_to->i_top++;
@@ -113,26 +113,32 @@ void	p(t_stack *stack_a, t_stack *stack_b, char mode)
 	stack_from->i_top--;
 }
 
+void	r_operation(t_stack *stack)
+{
+	int		tmp;
+	int		i;
+
+	tmp = stack->arr[stack->i_top];
+	i = stack->i_top;
+	while (i > 0)
+		stack->arr[i--] = stack->arr[i - 1];
+	stack->arr[0] = tmp;
+}
+
 void	r(t_stack *stack_a, t_stack *stack_b, char mode)
 {
 	t_stack	*stack_main;
-	int		i;
-	int		tmp;
 
-	if (mode == 'a')
-		stack_main = stack_a;
-	else if (mode == 'b')
-		stack_main = stack_b;
 	printf("r%c\n", mode);
-	if (stack_main->i_top < 0)
-		return;
-	i = stack_main->i_top;
-	tmp = stack_main->arr[stack_main->i_top];
-	while (i > 0)
-	{	
-		stack_main->arr[i--] = stack_main->arr[i - 1];
+	if (mode == 'a')
+		r_operation(stack_a);
+	else if (mode == 'b')
+		r_operation(stack_b);
+	else if (mode == 'r')
+	{
+		r_operation(stack_a);
+		r_operation(stack_b);
 	}
-	stack_main->arr[0] = tmp;
 }
 
 void	use(char *command, t_stack *stack_a, t_stack *stack_b)
@@ -155,6 +161,15 @@ int main(int argc, char *argv[])
 	print_stacks(&stack_a, &stack_b);
 
 	use("ra", &stack_a, &stack_b);
+
+	print_stacks(&stack_a, &stack_b);
+
+	use("pb", &stack_a, &stack_b);
+	use("pb", &stack_a, &stack_b);
+	use("pb", &stack_a, &stack_b);
+	// use("ra", &stack_a, &stack_b);
+	// use("rb", &stack_a, &stack_b);
+	// use("rr", &stack_a, &stack_b);
 	// use("sb", &stack_a, &stack_b);
 
 	print_stacks(&stack_a, &stack_b);
