@@ -20,13 +20,13 @@ void	create_stack_b(t_stack *stack_b, ssize_t size);
 void	use(char *command, t_stack *stack_a, t_stack *stack_b);
 
 void	p_operation(t_stack *stack_to, t_stack *stack_from);
-void	p(t_stack *stack_a, t_stack *stack_b, char mode);
+int		p(t_stack *stack_a, t_stack *stack_b, char mode);
 
 void	r_operation(t_stack *stack);
-void	r(t_stack *stack_a, t_stack *stack_b, char mode);
+int		r(t_stack *stack_a, t_stack *stack_b, char mode);
 
 void	rr_operation(t_stack *stack);
-void	rr(t_stack *stack_a, t_stack *stack_b, char mode);
+int		rr(t_stack *stack_a, t_stack *stack_b, char mode);
 
 void    s_operation(t_stack *stack);
-void	s(t_stack *stack_a, t_stack *stack_b, char mode);
+int		s(t_stack *stack_a, t_stack *stack_b, char mode);

@@ -52,12 +52,17 @@ void	create_stack_b(t_stack *stack_b, ssize_t size)
 
 void	use(char *command, t_stack *stack_a, t_stack *stack_b)
 {
-	if (command[0] == 's')
-		s(stack_a, stack_b, command[1]);
-	else if (command[0] == 'p')
-		p(stack_a, stack_b, command[1]);
-	else if (command[0] == 'r' && strlen(command) == 2)
-		r(stack_a, stack_b, command[1]);
-	else if (command[0] == 'r' && command[1] == 'r' && strlen(command) == 3)
-		rr(stack_a, stack_b, command[2]);
+	while (*command)
+	{
+		if (*command == ' ')
+			command++;
+		else if (*command == 's')
+			command += s(stack_a, stack_b, *(command + 1));
+		else if (*command == 'p')
+			command += p(stack_a, stack_b, *(command + 1));
+		else if (*command == 'r' && (*(command + 2) == ' ' || *(command + 2) == '\0'))
+			command += r(stack_a, stack_b, *(command + 1));
+		else if (*command == 'r' && *(command + 1) == 'r')
+			command += rr(stack_a, stack_b, *(command + 2));
+	}
 }

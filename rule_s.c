@@ -11,7 +11,7 @@ void    s_operation(t_stack *stack)
 	stack->arr[stack->i_top - 1] = tmp;
 }
 
-void	s(t_stack *stack_a, t_stack *stack_b, char mode)
+int		s(t_stack *stack_a, t_stack *stack_b, char mode)
 {
 	t_stack	*stack_main;
 	int		i;
@@ -27,4 +27,5 @@ void	s(t_stack *stack_a, t_stack *stack_b, char mode)
 		s_operation(stack_a);
 		s_operation(stack_b);
 	}
+	return (2);
 }
