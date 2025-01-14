@@ -2,7 +2,10 @@
 
 int		valid(t_stack *stack_b, ssize_t i, int num)
 {
-	if (i == stack_b->i_top && stack_b->arr[stack_b->i_top] >= stack_b->arr[0])
+	if (stack_b->i_top == 1)
+	if (i == stack_b->i_top && 
+		stack_b->arr[stack_b->i_top] <= num <= stack_b->arr[0]
+		)
 		return (1);
 	if (0 <= i < stack_b->i_top && 
 		stack_b->arr[i-1] <= num <= stack_b->arr[i+1])

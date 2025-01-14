@@ -11,7 +11,8 @@ typedef struct	s_stack
 {
 	ssize_t	i_top;
 	ssize_t	i_max;
-	int		*arr;		
+	int		*arr;
+	int		greatest;
 }				t_stack;
 
 void    print_stacks(t_stack *stack_a, t_stack *stack_b);
@@ -30,3 +31,7 @@ int		rr(t_stack *stack_a, t_stack *stack_b, char mode);
 
 void    s_operation(t_stack *stack);
 int		s(t_stack *stack_a, t_stack *stack_b, char mode);
+
+int		valid(t_stack *stack_b, ssize_t i, int num);
+void	rotate(t_stack *stack_a, t_stack *stack_b, int a_num_top);
+void	push_swap(t_stack *stack_a, t_stack *stack_b);

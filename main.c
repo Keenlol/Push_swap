@@ -11,27 +11,10 @@ int main(int argc, char *argv[])
 
 	print_stacks(&stack_a, &stack_b);
 
-	use("sa", &stack_a, &stack_b);
-
-	print_stacks(&stack_a, &stack_b);
-	
-	use("pb pb pb", &stack_a, &stack_b);
+	push_swap(&stack_a, &stack_b);
 
 	print_stacks(&stack_a, &stack_b);
 
-	use("rr", &stack_a, &stack_b);
-
-	print_stacks(&stack_a, &stack_b);
-
-	use("rrr", &stack_a, &stack_b);
-
-	print_stacks(&stack_a, &stack_b);
-
-	use("sa", &stack_a, &stack_b);
-
-	print_stacks(&stack_a, &stack_b);
-
-	use("pa pa pa", &stack_a, &stack_b);
-
-	print_stacks(&stack_a, &stack_b);
+	free(stack_a.arr);
+	free(stack_b.arr);
 }
