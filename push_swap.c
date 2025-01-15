@@ -36,15 +36,26 @@ void	rotate(t_stack *stack_a, t_stack *stack_b, int a_num_top)
 	}
 	else
 	{
-		while (i-- > 0)
+		while (i-- >= 0)
 			use("rrb", stack_a, stack_b);
 	}
 }
 
+// int		is_solved(t_stack *stack_a, t_stack *stack_b)
+// {
+// 	if (stack_a->i_top == 0)
+// 		return (1);
+// 	while()
+// }
+
 void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
 	use("sa pb pb", stack_a, stack_b);
-	rotate(stack_a, stack_b, stack_a->arr[stack_a->i_top]);
+	while (stack_a->i_top > 1)
+	{
+		rotate(stack_a, stack_b, stack_a->arr[stack_a->i_top]);
+		use("pb", stack_a, stack_b);
+	}
 }
 
 
