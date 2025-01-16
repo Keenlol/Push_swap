@@ -2,12 +2,22 @@
 
 void	p_operation(t_stack *stack_to, t_stack *stack_from)
 {
+	ssize_t	i;
+
 	stack_to->i_top++;
 	stack_to->arr[stack_to->i_top] = stack_from->arr[stack_from->i_top];
 	stack_from->arr[stack_from->i_top] = 0;
 	stack_from->i_top--;
 	if (stack_to->arr[stack_to->i_top] > stack_to->greatest)
 		stack_to->greatest = stack_to->arr[stack_to->i_top];
+	i = 0;
+	stack_from->greatest = stack_from->arr[i];
+	while (i < stack_from->i_top)
+	{
+		if (stack_from->arr[i] > stack_from->greatest)
+			stack_from->greatest = stack_from->arr[i];
+		i++;
+	}
 }
 
 int		p(t_stack *stack_a, t_stack *stack_b, char mode)
