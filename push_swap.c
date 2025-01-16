@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-int		valid(t_stack *stack_b, ssize_t i, int num, char mode)
+int		valid(t_stack *stack_b, ssize_t i, int num)
 {
 	ssize_t	i_b_top;
 	int		num_below;
@@ -12,46 +12,49 @@ int		valid(t_stack *stack_b, ssize_t i, int num, char mode)
 	else
 		num_above = stack_b->arr[i+1];
 	num_below = stack_b->arr[i];
-	if (mode == 'b' &&
-		((num_below <= num && num <= num_above) ||
+	if (num_below == num_above && num != num_above)
+		return (0);
+	if ((num_below <= num && num <= num_above) ||
 		(num_below == stack_b->greatest && 
-		(num <= num_above || stack_b->greatest <= num))))
-		return (1);
-	if (mode == 'a' &&
-		((num_below >= num && num >= num_above) ||
-		(num_above == stack_b->greatest && 
-		(num <= num_below || stack_b->greatest <= num))))
+		(num <= num_above || stack_b->greatest <= num)))
 		return (1);
 	return (0);
 }
 
-void	rotate(t_stack *stack_a, t_stack *stack_b, char *mode)
+void	rotate(t_stack *stack_a, t_stack *stack_b)
 {
 	ssize_t	i;
 	int		from_num_top;
 
 	i = stack_b->i_top;
-	while (!valid(stack_b, i, stack_a->arr[stack_a->i_top], mode[0]))
+	while (!valid(stack_b, i, stack_a->arr[stack_a->i_top]))
 		i--;
-	rotate_to(stack_a, stack_b, mode, i);
+	rotate_to(stack_a, stack_b, "b", i);
 }
 
 int		a_is_sorted(t_stack *stack_a)
 {
 	int		num_below;
 	ssize_t	i;
-	i = 0;
+	ssize_t count;
+	int		greatest_reached;
 
-	num_below = stack_a->arr[stack_a->i_top];
-	while (i <= stack_a->i_top)
+
+	i = 0;
+	count = stack_a->i_top - 1;
+	while (stack_a->arr[i] != stack_a->greatest)
+		i++;
+	num_below = stack_a->arr[i];
+	i++;
+	while (count > 0)
 	{
-		if (stack_a->arr[i] != stack_a->greatest)
-		{
-			if (stack_a->arr[i] > num_below)
-				return (0);
-		}
+		if (i > stack_a->i_top)
+			i = 0;
+		if (stack_a->arr[i] > num_below)
+ 			return (0);
 		num_below = stack_a->arr[i];
 		i++;
+		count--;
 	}
 	return (1);
 }
@@ -59,20 +62,21 @@ int		a_is_sorted(t_stack *stack_a)
 void	b_self_correct(t_stack *stack_a, t_stack *stack_b)
 {
 	ssize_t	i;
-	char	*command;
+	int		num_above;
 
 	i = 0;
-	while (stack_b->arr[i] != stack_b->greatest)
-		i++;
-	if (i >= stack_b->i_top / 2)
+	if (stack_b->i_top == 0)
+		return;
+	num_above = stack_b->arr[i+1];
+	while (i < stack_b->i_top)
 	{
-		command = "rb";
-		i = stack_b->i_top - i - 1;
+		if (stack_b->arr[i] == stack_b->greatest &&
+			stack_b->arr[i] > num_above)
+			break;
+		i++;
+		num_above = stack_b->arr[i+1];
 	}
-	else
-		command = "rrb";
-	while (i-- >= 0)
-		use(command, stack_a, stack_b);
+	rotate_to(stack_a, stack_b, "b", i);
 }
 
 void	rotate_to(t_stack *stack_a, t_stack *stack_b, char *mode, ssize_t i_dest)
@@ -101,25 +105,59 @@ void	rotate_to(t_stack *stack_a, t_stack *stack_b, char *mode, ssize_t i_dest)
 	free(command);
 }
 
+void	push_back(t_stack *stack_a, t_stack *stack_b)
+{
+	ssize_t	i;
+	
+	while (stack_b->i_top >= 0)
+	{
+		while (stack_b->arr[stack_b->i_top] < stack_a->arr[0] && 
+				stack_a->arr[0] != stack_a->greatest)
+		{
+			use("rra", stack_a, stack_b);
+			printf(" the %d <= %d\n", stack_b->arr[stack_b->i_top], stack_a->arr[0]);
+		}
+		use("pa", stack_a, stack_b);
+		print_stacks(stack_a, stack_b);
+	}
+	i = 0;
+	while (stack_a->arr[i] != stack_a->greatest)
+		i++;
+	if (i - 1 >= 0)
+		rotate_to(stack_a, stack_b, "a", i - 1);
+}
+
+void	a_self_correct(t_stack *stack_a, t_stack *stack_b)
+{
+	ssize_t	i;
+
+	i = 0;
+	while (stack_a->arr[i] != stack_a->greatest)
+		i++;
+	printf("greatest %ld = %d\n", i, stack_a->greatest);
+	i--;
+	if (stack_a->greatest >= stack_b->greatest)
+		i++;
+	printf("rotate to %ld\n", i);
+	if (i != -1)
+		rotate_to(stack_a, stack_b, "a", i);
+}
+
 void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
-	int		*func;
+	ssize_t	i;
 
 	use("pb pb", stack_a, stack_b);
 	while (!a_is_sorted(stack_a))
 	{
-		rotate(stack_a, stack_b,"b");
+		rotate(stack_a, stack_b);
 		use("pb", stack_a, stack_b);
 	}
 	print_stacks(stack_a, stack_b);
 	b_self_correct(stack_a, stack_b);
+	a_self_correct(stack_a, stack_b);
 	print_stacks(stack_a, stack_b);
-	while (stack_b->i_top >= 0)
-	{
-		rotate(stack_a, stack_b, "a");
-		print_stacks(stack_a, stack_b);
-		use("pa", stack_a, stack_b);
-	}
+	push_back(stack_a, stack_b);
 }
 
 

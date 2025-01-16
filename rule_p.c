@@ -12,7 +12,7 @@ void	p_operation(t_stack *stack_to, t_stack *stack_from)
 		stack_to->greatest = stack_to->arr[stack_to->i_top];
 	i = 0;
 	stack_from->greatest = stack_from->arr[i];
-	while (i < stack_from->i_top)
+	while (i <= stack_from->i_top)
 	{
 		if (stack_from->arr[i] > stack_from->greatest)
 			stack_from->greatest = stack_from->arr[i];
