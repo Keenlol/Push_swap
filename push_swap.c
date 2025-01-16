@@ -28,27 +28,12 @@ int		valid(t_stack *stack_b, ssize_t i, int num, char mode)
 void	rotate(t_stack *stack_a, t_stack *stack_b, char *mode)
 {
 	ssize_t	i;
-	char	*command;
 	int		from_num_top;
 
-	command = malloc(4 * sizeof(char));
 	i = stack_b->i_top;
 	while (!valid(stack_b, i, stack_a->arr[stack_a->i_top], mode[0]))
 		i--;
-	if (i >= stack_b->i_top / 2)
-	{
-		strcpy(command, "r");
-		strcat(command, mode);
-		i = stack_b->i_top - i - 1;
-	}
-	else
-	{
-		strcpy(command, "rr");
-		strcat(command, mode);
-	}
-	while (i-- >= 0)
-		use(command, stack_a, stack_b);
-	free(command);
+	rotate_to(stack_a, stack_b, mode, i);
 }
 
 int		a_is_sorted(t_stack *stack_a)
@@ -90,6 +75,32 @@ void	b_self_correct(t_stack *stack_a, t_stack *stack_b)
 		use(command, stack_a, stack_b);
 }
 
+void	rotate_to(t_stack *stack_a, t_stack *stack_b, char *mode, ssize_t i_dest)
+{
+	char	*command;
+	ssize_t	i_top;
+
+	if (mode[0] == 'a')
+		i_top = stack_a->i_top;
+	else if (mode[0] == 'b')
+		i_top = stack_b->i_top;
+	command = malloc(4 * sizeof(char));
+	if (i_dest >= i_top / 2)
+	{
+		strcpy(command, "r");
+		strcat(command, mode);
+		i_dest = i_top - i_dest - 1;
+	}
+	else
+	{
+		strcpy(command, "rr");
+		strcat(command, mode);
+	}
+	while (i_dest-- >= 0)
+		use(command, stack_a, stack_b);
+	free(command);
+}
+
 void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
 	int		*func;
@@ -106,9 +117,9 @@ void	push_swap(t_stack *stack_a, t_stack *stack_b)
 	while (stack_b->i_top >= 0)
 	{
 		rotate(stack_a, stack_b, "a");
+		print_stacks(stack_a, stack_b);
 		use("pa", stack_a, stack_b);
 	}
-	use("ra", stack_a, stack_b);
 }
 
 
