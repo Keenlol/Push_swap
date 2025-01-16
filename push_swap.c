@@ -27,7 +27,6 @@ void	rotate(t_stack *stack_a, t_stack *stack_b, int a_num_top)
 	i = stack_b->i_top;
 	while (!valid(stack_b, i, stack_a->arr[stack_a->i_top]))
 		i--;
-	printf("\ni = %ld\n", i);
 	if (i >= stack_b->i_top / 2)
 	{
 		i = stack_b->i_top - i;
@@ -41,21 +40,37 @@ void	rotate(t_stack *stack_a, t_stack *stack_b, int a_num_top)
 	}
 }
 
-// int		is_solved(t_stack *stack_a, t_stack *stack_b)
-// {
-// 	if (stack_a->i_top == 0)
-// 		return (1);
-// 	while()
-// }
+int		a_is_sorted(t_stack *stack_a)
+{
+	int		num_below;
+	ssize_t	i;
+
+	i = 0;
+	num_below = stack_a->arr[stack_a->i_top];
+	while (i <= stack_a->i_top)
+	{
+		if (stack_a->arr[i] != stack_a->greatest)
+		{
+			printf("check %d > %d\n", stack_a->arr[i], num_below);
+			if (stack_a->arr[i] > num_below)
+				return (0);
+		}
+		num_below = stack_a->arr[i];
+		i++;
+	}
+	return (1);
+}
 
 void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
-	use("sa pb pb", stack_a, stack_b);
-	while (stack_a->i_top > 1)
-	{
-		rotate(stack_a, stack_b, stack_a->arr[stack_a->i_top]);
-		use("pb", stack_a, stack_b);
-	}
+	// use("sa pb pb", stack_a, stack_b);
+	// while (stack_a->i_top >= 0)
+	// {
+	// 	rotate(stack_a, stack_b, stack_a->arr[stack_a->i_top]);
+	// 	use("pb", stack_a, stack_b);
+	// }
+	if (a_is_sorted(stack_a))
+		printf("sorted!!\n");
 }
 
 

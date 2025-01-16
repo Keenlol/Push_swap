@@ -35,3 +35,4 @@ int		s(t_stack *stack_a, t_stack *stack_b, char mode);
 int		valid(t_stack *stack_b, ssize_t i, int num);
 void	rotate(t_stack *stack_a, t_stack *stack_b, int a_num_top);
 void	push_swap(t_stack *stack_a, t_stack *stack_b);
+int		a_is_sorted(t_stack *stack_a);
