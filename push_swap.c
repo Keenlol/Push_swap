@@ -25,21 +25,21 @@ int		valid(t_stack *stack_b, ssize_t i, int num, char mode)
 	return (0);
 }
 
-void	rotate(t_stack *stack_from, t_stack *stack_to, char *mode)
+void	rotate(t_stack *stack_a, t_stack *stack_b, char *mode)
 {
 	ssize_t	i;
 	char	*command;
 	int		from_num_top;
 
 	command = malloc(4 * sizeof(char));
-	i = stack_to->i_top;
-	while (!valid(stack_to, i, stack_from->arr[stack_from->i_top], mode[0]))
+	i = stack_b->i_top;
+	while (!valid(stack_b, i, stack_a->arr[stack_a->i_top], mode[0]))
 		i--;
-	if (i >= stack_to->i_top / 2)
+	if (i >= stack_b->i_top / 2)
 	{
 		strcpy(command, "r");
 		strcat(command, mode);
-		i = stack_to->i_top - i - 1;
+		i = stack_b->i_top - i - 1;
 	}
 	else
 	{
@@ -47,7 +47,7 @@ void	rotate(t_stack *stack_from, t_stack *stack_to, char *mode)
 		strcat(command, mode);
 	}
 	while (i-- >= 0)
-		use(command, stack_from, stack_to);
+		use(command, stack_a, stack_b);
 	free(command);
 }
 
