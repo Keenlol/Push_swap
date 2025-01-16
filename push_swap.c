@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-int		valid(t_stack *stack_b, ssize_t i, int num)
+int		valid(t_stack *stack_b, ssize_t i, int num, char mode)
 {
 	ssize_t	i_b_top;
 	int		num_below;
@@ -12,58 +12,61 @@ int		valid(t_stack *stack_b, ssize_t i, int num)
 	else
 		num_above = stack_b->arr[i+1];
 	num_below = stack_b->arr[i];
-	if ((num_below <= num && num <= num_above) ||
+	if (mode == 'b' &&
+		((num_below <= num && num <= num_above) ||
 		(num_below == stack_b->greatest && 
-		(num <= num_above || stack_b->greatest <= num)))
+		(num <= num_above || stack_b->greatest <= num))))
+		return (1);
+	if (mode == 'a' &&
+		((num_below >= num && num >= num_above) ||
+		(num_above == stack_b->greatest && 
+		(num <= num_below || stack_b->greatest <= num))))
 		return (1);
 	return (0);
 }
 
-void	rotate(t_stack *stack_a, t_stack *stack_b, int a_num_top)
+void	rotate(t_stack *stack_from, t_stack *stack_to, char *mode)
 {
 	ssize_t	i;
 	char	*command;
+	int		from_num_top;
 
-	i = stack_b->i_top;
-	while (!valid(stack_b, i, stack_a->arr[stack_a->i_top]))
+	command = malloc(4 * sizeof(char));
+	i = stack_to->i_top;
+	while (!valid(stack_to, i, stack_from->arr[stack_from->i_top], mode[0]))
 		i--;
-	if (i >= stack_b->i_top / 2)
+	if (i >= stack_to->i_top / 2)
 	{
-		i = stack_b->i_top - i;
-		while (i-- > 0)
-			use("rb", stack_a, stack_b);
+		strcpy(command, "r");
+		strcat(command, mode);
+		i = stack_to->i_top - i - 1;
 	}
 	else
 	{
-		while (i-- >= 0)
-			use("rrb", stack_a, stack_b);
+		strcpy(command, "rr");
+		strcat(command, mode);
 	}
+	while (i-- >= 0)
+		use(command, stack_from, stack_to);
+	free(command);
 }
 
-int		is_sorted(t_stack *stack, ssize_t i_start, ssize_t i_end, char mode)
+int		a_is_sorted(t_stack *stack_a)
 {
-	int		num_prev;
-	ssize_t	count;
+	int		num_below;
 	ssize_t	i;
+	i = 0;
 
-	count = i_end - i_start;
-	if (i_start > i_end)
-		count = stack->i_top - i_start + i_end + 1;
-	i = i_start + 1;
-	num_prev = stack->arr[i_start];
-	printf("count = %ld\n",count);
-	while (count > 0)
+	num_below = stack_a->arr[stack_a->i_top];
+	while (i <= stack_a->i_top)
 	{
-		if (i > stack->i_top)
-			i = 0;
-		printf("comp %d with %d\n", stack->arr[i], num_prev);
-		if (mode == 'a' && stack->arr[i] < num_prev)
+		if (stack_a->arr[i] != stack_a->greatest)
+		{
+			if (stack_a->arr[i] > num_below)
 				return (0);
-		if (mode == 'd' && stack->arr[i] > num_prev)
-				return (0);
-		num_prev = stack->arr[i];
+		}
+		num_below = stack_a->arr[i];
 		i++;
-		count--;
 	}
 	return (1);
 }
@@ -75,19 +78,17 @@ int		is_sorted(t_stack *stack, ssize_t i_start, ssize_t i_end, char mode)
 
 void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
-	// use("sa pb pb", stack_a, stack_b);
-	// while (!a_is_sorted(stack_a))
-	// {
-	// 	rotate(stack_a, stack_b, stack_a->arr[stack_a->i_top]);
-	// 	use("pb", stack_a, stack_b);
-	// }
+	use("pb pb", stack_a, stack_b);
+	while (!a_is_sorted(stack_a))
+	{
+		rotate(stack_a, stack_b,"b");
+		use("pb", stack_a, stack_b);
+	}
 	// while (stack_b->i_top > -1)
 	// {
-	// 	rotate(stack_b, stack_a, stack_b->arr[stack_b->i_top]);
+	// 	rotate(stack_b, stack_a, 'a');
 	// 	use("pa", stack_a, stack_b);
 	// }
-	if (is_sorted(stack_a, 2, 1, 'd'))
-		printf("sorted!");
 }
 
 

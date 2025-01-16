@@ -32,7 +32,7 @@ int		rr(t_stack *stack_a, t_stack *stack_b, char mode);
 void    s_operation(t_stack *stack);
 int		s(t_stack *stack_a, t_stack *stack_b, char mode);
 
-int		valid(t_stack *stack_b, ssize_t i, int num);
-void	rotate(t_stack *stack_a, t_stack *stack_b, int a_num_top);
+int		valid(t_stack *stack_b, ssize_t i, int num, char mode);
+void	rotate(t_stack *stack_from, t_stack *stack_to, char *mode);
 void	push_swap(t_stack *stack_a, t_stack *stack_b);
 int		is_sorted(t_stack *stack, ssize_t i_start, ssize_t i_end, char mode);
