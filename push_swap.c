@@ -71,24 +71,44 @@ int		a_is_sorted(t_stack *stack_a)
 	return (1);
 }
 
-// void	push_back(t_stack *stack_a, t_stack *stack_b)
-// {
+void	b_self_correct(t_stack *stack_a, t_stack *stack_b)
+{
+	ssize_t	i;
+	char	*command;
 
-// }
+	i = 0;
+	while (stack_b->arr[i] != stack_b->greatest)
+		i++;
+	if (i >= stack_b->i_top / 2)
+	{
+		command = "rb";
+		i = stack_b->i_top - i - 1;
+	}
+	else
+		command = "rrb";
+	while (i-- >= 0)
+		use(command, stack_a, stack_b);
+}
 
 void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
+	int		*func;
+
 	use("pb pb", stack_a, stack_b);
 	while (!a_is_sorted(stack_a))
 	{
 		rotate(stack_a, stack_b,"b");
 		use("pb", stack_a, stack_b);
 	}
-	// while (stack_b->i_top > -1)
-	// {
-	// 	rotate(stack_b, stack_a, 'a');
-	// 	use("pa", stack_a, stack_b);
-	// }
+	print_stacks(stack_a, stack_b);
+	b_self_correct(stack_a, stack_b);
+	print_stacks(stack_a, stack_b);
+	while (stack_b->i_top >= 0)
+	{
+		rotate(stack_a, stack_b, "a");
+		use("pa", stack_a, stack_b);
+	}
+	use("ra", stack_a, stack_b);
 }
 
 
