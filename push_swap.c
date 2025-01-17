@@ -34,26 +34,21 @@ void	rotate(t_stack *stack_a, t_stack *stack_b)
 
 int		a_is_sorted(t_stack *stack_a)
 {
-	int		num_below;
 	ssize_t	i;
-	ssize_t count;
-	int		greatest_reached;
-
+	ssize_t	count;
+	int		num_below;
 
 	i = 0;
-	count = stack_a->i_top - 1;
 	while (stack_a->arr[i] != stack_a->greatest)
 		i++;
 	num_below = stack_a->arr[i];
-	i++;
+	count = stack_a->i_top;
 	while (count > 0)
 	{
-		if (i > stack_a->i_top)
-			i = 0;
+		i = (i + 1) % (stack_a->i_top + 1);
 		if (stack_a->arr[i] > num_below)
- 			return (0);
+			return (0);
 		num_below = stack_a->arr[i];
-		i++;
 		count--;
 	}
 	return (1);
@@ -113,12 +108,8 @@ void	push_back(t_stack *stack_a, t_stack *stack_b)
 	{
 		while (stack_b->arr[stack_b->i_top] < stack_a->arr[0] && 
 				stack_a->arr[0] != stack_a->greatest)
-		{
 			use("rra", stack_a, stack_b);
-			printf(" the %d <= %d\n", stack_b->arr[stack_b->i_top], stack_a->arr[0]);
-		}
 		use("pa", stack_a, stack_b);
-		print_stacks(stack_a, stack_b);
 	}
 	i = 0;
 	while (stack_a->arr[i] != stack_a->greatest)
@@ -132,13 +123,13 @@ void	a_self_correct(t_stack *stack_a, t_stack *stack_b)
 	ssize_t	i;
 
 	i = 0;
+	if (stack_a->i_top <= 0)
+		return;
 	while (stack_a->arr[i] != stack_a->greatest)
 		i++;
-	printf("greatest %ld = %d\n", i, stack_a->greatest);
 	i--;
 	if (stack_a->greatest >= stack_b->greatest)
 		i++;
-	printf("rotate to %ld\n", i);
 	if (i != -1)
 		rotate_to(stack_a, stack_b, "a", i);
 }
@@ -147,16 +138,13 @@ void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
 	ssize_t	i;
 
-	use("pb pb", stack_a, stack_b);
 	while (!a_is_sorted(stack_a))
 	{
 		rotate(stack_a, stack_b);
 		use("pb", stack_a, stack_b);
 	}
-	print_stacks(stack_a, stack_b);
 	b_self_correct(stack_a, stack_b);
 	a_self_correct(stack_a, stack_b);
-	print_stacks(stack_a, stack_b);
 	push_back(stack_a, stack_b);
 }
 
