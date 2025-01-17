@@ -21,7 +21,7 @@ int		valid(t_stack *stack_b, ssize_t i, int num)
 	return (0);
 }
 
-void	rotate(t_stack *stack_a, t_stack *stack_b)
+void	rotate_b(t_stack *stack_a, t_stack *stack_b)
 {
 	ssize_t	i;
 	int		from_num_top;
@@ -86,14 +86,14 @@ void	rotate_to(t_stack *stack_a, t_stack *stack_b, char *mode, ssize_t i_dest)
 	command = malloc(4 * sizeof(char));
 	if (i_dest >= i_top / 2)
 	{
-		strcpy(command, "r");
-		strcat(command, mode);
+		ft_strcpy(command, "r");
+		ft_strcat(command, mode);
 		i_dest = i_top - i_dest - 1;
 	}
 	else
 	{
-		strcpy(command, "rr");
-		strcat(command, mode);
+		ft_strcpy(command, "rr");
+		ft_strcat(command, mode);
 	}
 	while (i_dest-- >= 0)
 		use(command, stack_a, stack_b);
@@ -140,7 +140,7 @@ void	push_swap(t_stack *stack_a, t_stack *stack_b)
 
 	while (!a_is_sorted(stack_a))
 	{
-		rotate(stack_a, stack_b);
+		rotate_b(stack_a, stack_b);
 		use("pb", stack_a, stack_b);
 	}
 	b_self_correct(stack_a, stack_b);

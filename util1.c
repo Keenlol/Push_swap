@@ -7,20 +7,22 @@ void    print_stacks(t_stack *stack_a, t_stack *stack_b)
 	i = stack_a->i_top;
 	if (stack_b->i_top > i)
 		i = stack_b->i_top;
-	printf("---------------------\n");
+	ft_putmsg_fd("---------------------\n",1);
 	while (i >= 0)
 	{
 		if (stack_a->i_top >= i)
-			printf("%d ", stack_a->arr[i]);
+			ft_putnbr_fd(stack_a->arr[i], 1);
 		else
-			printf("  ");
+			write(1, " ", 1);
+		write(1, " ", 1);
 		if (stack_b->i_top >= i)
-			printf("%d\n", stack_b->arr[i]);
+			ft_putnbr_fd(stack_b->arr[i], 1);
 		else
-			printf(" \n");
+			write(1, " ", 1);
+		write(1, "\n", 1);
 		i--;
 	}
-	printf("_ _\na b\n");
+	ft_putmsg_fd("_ _\na b\n", 1);
 }
 
 void	create_stack_a(t_stack *stack_a, char *argv[], ssize_t size)
@@ -35,7 +37,7 @@ void	create_stack_a(t_stack *stack_a, char *argv[], ssize_t size)
 	stack_a->greatest = -2147483647;
 	while (argv[i])
 	{
-		arr[i-1] = atoi(argv[size - i + 1]);
+		arr[i-1] = ft_atoi(argv[size - i + 1]);
 		if (arr[i-1] > stack_a->greatest)
 			stack_a->greatest = arr[i-1];
 		i++;

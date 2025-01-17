@@ -16,7 +16,9 @@ int		r(t_stack *stack_a, t_stack *stack_b, char mode)
 {
 	t_stack	*stack_main;
 
-	printf("r%c\n", mode);
+	write(1, "r", 1);
+	write(1, &mode, 1);
+	write(1, "\n", 1);
 	if (mode == 'a')
 		r_operation(stack_a);
 	else if (mode == 'b')

@@ -25,7 +25,9 @@ int		p(t_stack *stack_a, t_stack *stack_b, char mode)
 	t_stack	*stack_from;
 	t_stack	*stack_to;
 
-	printf("p%c\n", mode);
+	write(1, "p", 1);
+	write(1, &mode, 1);
+	write(1, "\n", 1);
 	if (mode == 'a')
 	{
 		stack_from = stack_b;
