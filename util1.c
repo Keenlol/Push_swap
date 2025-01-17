@@ -35,7 +35,7 @@ void	create_stack_a(t_stack *stack_a, char *argv[], ssize_t size)
 	stack_a->greatest = -2147483647;
 	while (argv[i])
 	{
-		arr[i-1] = atoi(argv[i]);
+		arr[i-1] = atoi(argv[size - i + 1]);
 		if (arr[i-1] > stack_a->greatest)
 			stack_a->greatest = arr[i-1];
 		i++;
