@@ -16,7 +16,7 @@ int		arg_is_num(char *str)
 		i++;
 	while (str[i])
 	{
-		if (!('0' < str[i] && str[i] < '9'))
+		if (!('0' <= str[i] && str[i] <= '9'))
 			return (0);
 		i++;
 	}
