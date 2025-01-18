@@ -12,11 +12,9 @@ int		valid(t_stack *stack_b, ssize_t i, int num)
 	else
 		num_above = stack_b->arr[i+1];
 	num_below = stack_b->arr[i];
-	if (num_below == num_above && num != num_above)
-		return (0);
-	if ((num_below <= num && num <= num_above) ||
+	if ((num_below < num && num < num_above) ||
 		(num_below == stack_b->greatest && 
-		(num <= num_above || stack_b->greatest <= num)))
+		(num < num_above || stack_b->greatest < num)))
 		return (1);
 	return (0);
 }
@@ -128,7 +126,7 @@ void	a_self_correct(t_stack *stack_a, t_stack *stack_b)
 	while (stack_a->arr[i] != stack_a->greatest)
 		i++;
 	i--;
-	if (stack_a->greatest >= stack_b->greatest)
+	if (stack_a->greatest > stack_b->greatest)
 		i++;
 	if (i != -1)
 		rotate_to(stack_a, stack_b, "a", i);
