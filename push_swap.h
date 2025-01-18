@@ -44,3 +44,8 @@ char 	*ft_strcpy(char *d, const char *s);
 char 	*ft_strcat(char *a, char *b);
 void	ft_putmsg_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+
+void	error_exit(void);
+int		char_error(char *argv[]);
+int		arg_is_num(char *str);
+int		dup_error(t_stack *stack);
