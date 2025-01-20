@@ -26,24 +26,31 @@ int	ft_atoi(const char *str)
 	return (num);
 }
 
-char	*ft_strcat(char *a, char *b)
+char	*ft_strcat(char *dest, const char *src)
 {
-	while (*a)
-		a++;
-	a--;
-	while (*a)
-		*a++ = *b++;
-	return (a);
+	char	*dest_end;
+
+	dest_end = dest;
+	while (*dest_end)
+		dest_end++;
+	while (*src)
+	{
+		*dest_end = *src;
+		dest_end++;
+		src++;
+	}
+	*dest_end = '\0';
+	return (dest);
 }
 
-char	*ft_strcpy(char *d, const char *s)
+char	*ft_strcpy(char *dest, const char *src)
 {
 	char	*saved;
 
-	saved = d;
-	while (*s)
-		*d++ = *s++;
-	*d = 0;
+	saved = dest;
+	while (*src)
+		*dest++ = *src++;
+	*dest = 0;
 	return (saved);
 }
 
