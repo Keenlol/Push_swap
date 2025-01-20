@@ -26,20 +26,23 @@ int	ft_atoi(const char *str)
 	return (num);
 }
 
-char	*ft_strcat(char *a, char *b) {
-	while (*a++);
+char	*ft_strcat(char *a, char *b)
+{
+	while (*a)
+		a++;
 	a--;
-	while (*a++ = *b++);
+	while (*a)
+		*a++ = *b++;
 	return a;
 }
 
-char    *ft_strcpy(char *d, const char *s)
+char	*ft_strcpy(char *d, const char *s)
 {
-   char *saved = d;
-   while (*s)
-       *d++ = *s++;
-   *d = 0;
-   return saved;
+	char *saved = d;
+	while (*s)
+		*d++ = *s++;
+	*d = 0;
+	return saved;
 }
 
 void	ft_putmsg_fd(char *s, int fd)

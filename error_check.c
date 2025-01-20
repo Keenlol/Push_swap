@@ -7,7 +7,7 @@ void	error_exit(void)
 	return ;
 }
 
-int		arg_is_num(char *str)
+int	arg_is_num(char *str)
 {
 	int	i;
 
@@ -23,10 +23,10 @@ int		arg_is_num(char *str)
 	return (1);
 }
 
-int		char_error(char *argv[])
+int	char_error(char *argv[])
 {
 	size_t	i;
-	
+
 	i = 1;
 	while (argv[i])
 	{
@@ -37,7 +37,7 @@ int		char_error(char *argv[])
 	return (0);
 }
 
-int		dup_error(t_stack *stack)
+int	dup_error(t_stack *stack)
 {
 	int	tmp;
 	int	i;
