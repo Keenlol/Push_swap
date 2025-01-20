@@ -17,8 +17,8 @@ int		char_error(char *argv[]);
 int		dup_error(t_stack *stack);
 
 int		ft_atoi(const char *str);
-char	*ft_strcat(char *a, char *b);
-char	*ft_strcpy(char *d, const char *s);
+char	*ft_strcat(char *dest, const char *src);
+char	*ft_strcpy(char *dest, const char *src);
 void	ft_putmsg_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 
@@ -47,7 +47,7 @@ void	create_stack_a(t_stack *stack_a, char *argv[], ssize_t size);
 void	create_stack_b(t_stack *stack_b, ssize_t size);
 void	use(char *command, t_stack *stack_a, t_stack *stack_b);
 
-int	valid(t_stack *stack_b, ssize_t i, int num);
+int		valid(t_stack *stack_b, ssize_t i, int num);
 void	rotate_b(t_stack *stack_a, t_stack *stack_b);
 void	rotate_to(t_stack *stack_a, t_stack *stack_b, char *m, ssize_t i_dst);
 
