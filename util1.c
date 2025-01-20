@@ -73,3 +73,10 @@ void	use(char *command, t_stack *stack_a, t_stack *stack_b)
 			command += rr(stack_a, stack_b, *(command + 2));
 	}
 }
+
+void	find_good_spot_b(ssize_t *i_b, t_stack *stack_b, int num)
+{
+	*i_b = stack_b->i_top;
+	while (!valid(stack_b, *i_b, num))
+		(*i_b)--;
+}

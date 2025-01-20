@@ -32,9 +32,7 @@ void	rotate_b(t_stack *stack_a, t_stack *stack_b)
 	i_a = stack_a->i_top;
 	while (i_a >= 0)
 	{
-		i_b = stack_b->i_top;
-		while (!valid(stack_b, i_b, stack_a->arr[i_a]))
-			i_b--;
+		find_good_spot_b(&i_b, stack_b, stack_a->arr[i_a]);
 		cost.current = cal_cost(stack_a->i_top, i_a, stack_b->i_top, i_b);
 		if (cost.current < cost.lowest)
 		{
@@ -43,9 +41,7 @@ void	rotate_b(t_stack *stack_a, t_stack *stack_b)
 		}
 		i_a--;
 	}
-	i_b = stack_b->i_top;
-	while (!valid(stack_b, i_b, stack_a->arr[i_a_lowest_cost]))
-		i_b--;
+	find_good_spot_b(&i_b, stack_b, stack_a->arr[i_a_lowest_cost]);
 	magic(stack_a, stack_b, &i_a_lowest_cost, &i_b);
 	rotate_to(stack_a, stack_b, "a", i_a_lowest_cost);
 	rotate_to(stack_a, stack_b, "b", i_b);

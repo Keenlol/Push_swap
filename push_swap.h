@@ -52,6 +52,7 @@ void	print_stacks(t_stack *stack_a, t_stack *stack_b);
 void	create_stack_a(t_stack *stack_a, char *argv[], ssize_t size);
 void	create_stack_b(t_stack *stack_b, ssize_t size);
 void	use(char *command, t_stack *stack_a, t_stack *stack_b);
+void	find_good_spot_b(ssize_t *i_b, t_stack *stack_b, int num);
 
 int		valid(t_stack *stack_b, ssize_t i, int num);
 void	rotate_b(t_stack *stack_a, t_stack *stack_b);
