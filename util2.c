@@ -21,12 +21,30 @@ int	valid(t_stack *stack_b, ssize_t i, int num)
 
 void	rotate_b(t_stack *stack_a, t_stack *stack_b)
 {
-	ssize_t	i;
+	ssize_t	i_b;
+	ssize_t	i_a;
+	ssize_t	i_a_lowest_cost;
+	ssize_t	cost;
 
-	i = stack_b->i_top;
-	while (!valid(stack_b, i, stack_a->arr[stack_a->i_top]))
-		i--;
-	rotate_to(stack_a, stack_b, "b", i);
+	if (stack_b->i_top <= 0)
+		return ;
+	i_a_lowest_cost = stack_a->i_top;
+	i_a = stack_a->i_top;
+	while (i_a >= 0)
+	{
+		i_b = stack_b->i_top;
+		while (!valid(stack_b, i_b, stack_a->arr[i_a]))
+			i_b--;
+		cost = cal_cost(stack_a->i_top, i_a, stack_b->i_top, i_b);
+		if (cost < i_a_lowest_cost)
+			i_a_lowest_cost = i_a;
+		i_a--;
+	}
+	rotate_to(stack_a, stack_b, "a", i_a_lowest_cost);
+	i_b = stack_b->i_top;
+	while (!valid(stack_b, i_b, stack_a->arr[stack_a->i_top]))
+		i_b--;
+	rotate_to(stack_a, stack_b, "b", i_b);
 }
 
 void	rotate_to(t_stack *stack_a, t_stack *stack_b, char *m, ssize_t i_dst)
@@ -53,4 +71,22 @@ void	rotate_to(t_stack *stack_a, t_stack *stack_b, char *m, ssize_t i_dst)
 	while (i_dst-- >= 0)
 		use(command, stack_a, stack_b);
 	free(command);
+}
+
+ssize_t	cal_cost(ssize_t i_atop, ssize_t i_a, ssize_t i_btop, ssize_t i_b)
+{
+	ssize_t	cost_b;
+	ssize_t	cost_a;
+
+	if (i_btop <= 0)
+		return (0);
+	if (i_b >= i_btop / 2)
+		cost_b = i_btop - i_b;
+	else
+		cost_b = i_b + 1;
+	if (i_a >= i_atop / 2)
+		cost_a = i_atop - i_a;
+	else
+		cost_a = i_a + 1;
+	return (cost_a + cost_b);
 }

@@ -50,5 +50,6 @@ void	use(char *command, t_stack *stack_a, t_stack *stack_b);
 int		valid(t_stack *stack_b, ssize_t i, int num);
 void	rotate_b(t_stack *stack_a, t_stack *stack_b);
 void	rotate_to(t_stack *stack_a, t_stack *stack_b, char *m, ssize_t i_dst);
+ssize_t	cal_cost(ssize_t i_atop, ssize_t i_a, ssize_t i_btop, ssize_t i_b);
 
 #endif
