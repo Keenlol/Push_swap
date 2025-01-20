@@ -33,16 +33,18 @@ char	*ft_strcat(char *a, char *b)
 	a--;
 	while (*a)
 		*a++ = *b++;
-	return a;
+	return (a);
 }
 
 char	*ft_strcpy(char *d, const char *s)
 {
-	char *saved = d;
+	char	*saved;
+
+	saved = d;
 	while (*s)
 		*d++ = *s++;
 	*d = 0;
-	return saved;
+	return (saved);
 }
 
 void	ft_putmsg_fd(char *s, int fd)

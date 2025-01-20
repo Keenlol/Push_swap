@@ -12,7 +12,7 @@ void	rr_operation(t_stack *stack)
 	stack->arr[stack->i_top] = tmp;
 }
 
-int		rr(t_stack *stack_a, t_stack *stack_b, char mode)
+int	rr(t_stack *stack_a, t_stack *stack_b, char mode)
 {
 	t_stack	*stack_main;
 

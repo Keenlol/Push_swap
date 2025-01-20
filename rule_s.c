@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void    s_operation(t_stack *stack)
+void	s_operation(t_stack *stack)
 {
 	int		tmp;
 
@@ -11,7 +11,7 @@ void    s_operation(t_stack *stack)
 	stack->arr[stack->i_top - 1] = tmp;
 }
 
-int		s(t_stack *stack_a, t_stack *stack_b, char mode)
+int	s(t_stack *stack_a, t_stack *stack_b, char mode)
 {
 	t_stack	*stack_main;
 	int		i;

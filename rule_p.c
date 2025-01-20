@@ -20,7 +20,7 @@ void	p_operation(t_stack *stack_to, t_stack *stack_from)
 	}
 }
 
-int		p(t_stack *stack_a, t_stack *stack_b, char mode)
+int	p(t_stack *stack_a, t_stack *stack_b, char mode)
 {
 	t_stack	*stack_from;
 	t_stack	*stack_to;
@@ -40,6 +40,6 @@ int		p(t_stack *stack_a, t_stack *stack_b, char mode)
 	}
 	if (stack_from->i_top < 0)
 		return (2);
-    p_operation(stack_to, stack_from);
+	p_operation(stack_to, stack_from);
 	return (2);
 }
