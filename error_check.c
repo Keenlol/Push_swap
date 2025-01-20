@@ -39,7 +39,6 @@ int	char_error(char *argv[])
 
 int	dup_error(t_stack *stack)
 {
-	int	tmp;
 	int	i;
 	int	j;
 

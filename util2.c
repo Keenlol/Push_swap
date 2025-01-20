@@ -22,7 +22,6 @@ int	valid(t_stack *stack_b, ssize_t i, int num)
 void	rotate_b(t_stack *stack_a, t_stack *stack_b)
 {
 	ssize_t	i;
-	int		from_num_top;
 
 	i = stack_b->i_top;
 	while (!valid(stack_b, i, stack_a->arr[stack_a->i_top]))

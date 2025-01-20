@@ -2,8 +2,6 @@
 
 void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
-	ssize_t	i;
-
 	while (!a_is_sorted(stack_a))
 	{
 		rotate_b(stack_a, stack_b);

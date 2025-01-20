@@ -8,14 +8,15 @@ void	r_operation(t_stack *stack)
 	tmp = stack->arr[stack->i_top];
 	i = stack->i_top;
 	while (i > 0)
-		stack->arr[i--] = stack->arr[i - 1];
+	{
+		stack->arr[i] = stack->arr[i - 1];
+		i--;
+	}
 	stack->arr[0] = tmp;
 }
 
 int	r(t_stack *stack_a, t_stack *stack_b, char mode)
 {
-	t_stack	*stack_main;
-
 	write(1, "r", 1);
 	write(1, &mode, 1);
 	write(1, "\n", 1);
