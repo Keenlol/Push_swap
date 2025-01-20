@@ -24,26 +24,30 @@ void	rotate_b(t_stack *stack_a, t_stack *stack_b)
 	ssize_t	i_b;
 	ssize_t	i_a;
 	ssize_t	i_a_lowest_cost;
-	ssize_t	cost;
+	t_cost	cost;
 
 	if (stack_b->i_top <= 0)
 		return ;
-	i_a_lowest_cost = stack_a->i_top;
+	cost.lowest = stack_a->i_top + stack_b->i_top;
 	i_a = stack_a->i_top;
 	while (i_a >= 0)
 	{
 		i_b = stack_b->i_top;
 		while (!valid(stack_b, i_b, stack_a->arr[i_a]))
 			i_b--;
-		cost = cal_cost(stack_a->i_top, i_a, stack_b->i_top, i_b);
-		if (cost < i_a_lowest_cost)
+		cost.current = cal_cost(stack_a->i_top, i_a, stack_b->i_top, i_b);
+		if (cost.current < cost.lowest)
+		{
 			i_a_lowest_cost = i_a;
+			cost.lowest = cost.current;
+		}
 		i_a--;
 	}
-	rotate_to(stack_a, stack_b, "a", i_a_lowest_cost);
 	i_b = stack_b->i_top;
-	while (!valid(stack_b, i_b, stack_a->arr[stack_a->i_top]))
+	while (!valid(stack_b, i_b, stack_a->arr[i_a_lowest_cost]))
 		i_b--;
+	magic(stack_a, stack_b, &i_a_lowest_cost, &i_b);
+	rotate_to(stack_a, stack_b, "a", i_a_lowest_cost);
 	rotate_to(stack_a, stack_b, "b", i_b);
 }
 
@@ -89,4 +93,30 @@ ssize_t	cal_cost(ssize_t i_atop, ssize_t i_a, ssize_t i_btop, ssize_t i_b)
 	else
 		cost_a = i_a + 1;
 	return (cost_a + cost_b);
+}
+
+void	magic(t_stack *stack_a, t_stack *stack_b, ssize_t *i_a, ssize_t *i_b)
+{
+	ssize_t	tmp;
+
+	if (*i_a >= stack_a->i_top / 2 && *i_b >= stack_b->i_top / 2)
+	{
+		tmp = stack_a->i_top - *i_a;
+		if (stack_b->i_top - *i_b < tmp)
+			tmp = stack_b->i_top - *i_b;
+		*i_a += tmp;
+		*i_b += tmp;
+		while (tmp-- > 0)
+			use("rr", stack_a, stack_b);
+	}
+	else if (*i_a <= stack_a->i_top / 2 && *i_b <= stack_b->i_top / 2)
+	{
+		tmp = *i_a + 1;
+		if (*i_b + 1 < tmp)
+			tmp = *i_b + 1;
+		*i_a -= tmp;
+		*i_b -= tmp;
+		while (tmp-- > 0)
+			use("rrr", stack_a, stack_b);
+	}
 }

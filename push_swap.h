@@ -11,6 +11,12 @@ typedef struct s_stack
 	int		greatest;
 }				t_stack;
 
+typedef struct s_cost
+{
+	ssize_t	current;
+	ssize_t	lowest;
+}				t_cost;
+
 void	error_exit(void);
 int		arg_is_num(char *str);
 int		char_error(char *argv[]);
@@ -51,5 +57,6 @@ int		valid(t_stack *stack_b, ssize_t i, int num);
 void	rotate_b(t_stack *stack_a, t_stack *stack_b);
 void	rotate_to(t_stack *stack_a, t_stack *stack_b, char *m, ssize_t i_dst);
 ssize_t	cal_cost(ssize_t i_atop, ssize_t i_a, ssize_t i_btop, ssize_t i_b);
+void	magic(t_stack *stack_a, t_stack *stack_b, ssize_t *i_a, ssize_t *i_b);
 
 #endif
